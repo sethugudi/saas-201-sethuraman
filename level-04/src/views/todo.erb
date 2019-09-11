@@ -1,0 +1,35 @@
+<header>
+  <div id='header-left'>
+      <h1>
+      <% @todo.each do |k,v| %>
+       <h3>
+        <% if k.to_s=='title'%>
+           <a class="todo-box"><%= v %></a>
+        <% elsif v.to_s.empty? %>
+          <a class="todo-box">No End Date</a>
+        <% else %>  
+           Deadline: <%= v %>
+        <% end %>
+        <br/>
+      <% end %>
+        </h3>
+        <h3> Update Todo! </h3>
+      </h1>
+  </div>
+</header>
+      <% @todo.each do |k,v| %>
+      <% if k.to_s=='title'%>
+        <section class='todo-container'>
+        <div>
+            <form action="/todos/<%= @id %>" method="POST" class="form">
+      <!-- because he cannot put a put method on our form -->
+            <input type='hidden' name='_method' value='put'>
+            <input type="text" name="title" value="<%= v %>"/>
+            <div class='btn-container'> 
+            <a class='btn' href='/todos'>︎Back</a>
+            <input class='btn-submit' type='submit' value='save changes'></div>
+            </form>
+        </div>
+      </section>
+      <% end %>
+      <% end %>
