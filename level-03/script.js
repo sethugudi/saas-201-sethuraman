@@ -26,73 +26,33 @@
       //reg_form.addEventListener('submit', onSubmit);
 
     dept1.addEventListener("change",disableDuplicateSecondaryDepartment);
-    //dept2.addEventListener("change",disableDuplicatePrimaryDepartment);
+  //  dept2.addEventListener("change",disableDuplicatePrimaryDepartment);
 
 
   };
 
 
 
-  var disableDuplicatePrimaryDepartment = function(event) {
-    // 2. in department2, Should disable the option selected in department1
-
-        //alert(dept1.selectedIndex);
-
-        while (dept1.value===dept2.value)
-        {
-            val1=dept2.selectedIndex;
-            if (val1==3)
-                val1=0;
-            dept1.selectedIndex=val1+1;
-        }
-
-        var len=dept1.length;
-
-        for (i=0;i<len;++i)
-        {
-          if (i != dept2.selectedIndex)
-          {
-              dept1.options[i].disabled=false;
-          }
-        }
-        
-      //  alert(dept1.value);
-      //alert(dept2.value);
-   //     var opt=dept1.options[dept1.selectedIndex].value;
-        dept1.options[dept2.selectedIndex].disabled=true;
-
-        //alert(dept2.value);
-        //dept2.options[opt].disabled=true;
-  }
-
+  
   var disableDuplicateSecondaryDepartment = function(event) {
-    // 2. in department2, Should disable the option selected in department1
+    
+      var op1=dept1.selectedIndex;
 
-        while (dept1.value===dept2.value)
+        var len1=dept2.length;
+
+        for (i=0;i<len1;++i)
         {
-            val=dept1.selectedIndex;
-            if (val==3)
-                val=0;
-            dept2.selectedIndex=val+1;
-        }
-
-        var len=dept2.length;
-
-        for (i=0;i<len;++i)
-        {
-          if (i != dept1.selectedIndex)
+          if (i != op1)
           {
               dept2.options[i].disabled=false;
           }
+          else
+          {
+              dept2.options[i].disabled=true; 
+          }
         }
-        
-      //  alert(dept1.value);
-      //alert(dept2.value);
-   //     var opt=dept1.options[dept1.selectedIndex].value;
-        dept2.options[dept1.selectedIndex].disabled=true;
 
-        //alert(dept2.value);
-        //dept2.options[opt].disabled=true;
+    
   }
 
   var constructData = function() {
@@ -114,26 +74,26 @@
   var validateResults = function(data) {
     var isValid = true;
     
+    var emailPattern = /^[a-zA-Z0-9.]+@college.edu$/;
    // var regex = /[^A-Za-z0-9@.]+$/;
     //var regex = /[^A-Za-z0-9@.]/;
 
      if (data["name"].length > 100)
      {
-        isValid=false;
+        isValid=false;  
      }
      else if (data["phno"].length > 10)
-      {
+     {
         isValid=false;
      }
-      //else if( (!data["emailaddress"].endsWith("college.edu") && (/[^a-zA-Z0-9@\.]+$/.test(data["emailaddress"])))     
-      else if(!data["emailaddress"].endsWith("college.edu"))     
-      {
+     else if (!emailPattern.test(data["emailaddress"]))     
+     {
           isValid=false;
-      }
-      else if(data["department1"] == data["department2"])
-      {
+     }
+     else if (data["department1"]===data["department2"])
+     {
           isValid=false;
-      }
+     }
 
     /*else if (! regex.test(data["emailaddress"]))
     {
